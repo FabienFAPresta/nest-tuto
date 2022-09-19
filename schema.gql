@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Article {
+  id: ID!
+  title: String!
+  description: String!
+  image: String!
+}
+
+type ArticleCreateOutput {
+  article: Article!
+}
+
+type Query {
+  sayHello: String!
+}
+
+type Mutation {
+  createArticle(input: ArticleCreateInput!): ArticleCreateOutput!
+}
+
+input ArticleCreateInput {
+  title: String!
+  description: String!
+  image: String!
+}
