@@ -13,15 +13,32 @@ type ArticleCreateOutput {
   article: Article!
 }
 
+type ArticleDeleteOutput {
+  id: ID!
+}
+
+type ArticleUpdateOutput {
+  article: Article!
+}
+
 type Query {
   sayHello: String!
+  articleList: [Article!]!
 }
 
 type Mutation {
   createArticle(input: ArticleCreateInput!): ArticleCreateOutput!
+  updateArticle(id: ID!, input: ArticleUpdateInput!): ArticleUpdateOutput!
+  deleteArticle(id: ID!): ArticleDeleteOutput!
 }
 
 input ArticleCreateInput {
+  title: String!
+  description: String!
+  image: String!
+}
+
+input ArticleUpdateInput {
   title: String!
   description: String!
   image: String!
