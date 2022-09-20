@@ -53,6 +53,10 @@ type UserCreateOutput {
   user: User!
 }
 
+type AuthLoginOutput {
+  accessToken: String!
+}
+
 type Query {
   sayHello: String!
   articleList(skip: Int!, take: Int!, sortBy: ArticlePaginationSortBy): ArticlesPagination!
@@ -72,6 +76,7 @@ type Mutation {
   createArticle(input: ArticleCreateInput!): ArticleCreateOutput!
   updateArticle(id: ID!, input: ArticleUpdateInput!): ArticleUpdateOutput!
   deleteArticle(id: ID!): ArticleDeleteOutput!
+  authLogin(username: String!, password: String!): AuthLoginOutput!
   userCreate(input: UserCreateInput!): UserCreateOutput!
 }
 
