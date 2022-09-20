@@ -1,5 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { Article } from '../models/article.model';
+import { InputType, ObjectType } from '@nestjs/graphql';
 import { ArticleCreateInput, ArticleCreateOutput } from './article-create.dto';
 
 @InputType()

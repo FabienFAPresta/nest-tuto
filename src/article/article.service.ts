@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SortDirection } from 'src/pagination/dto/pagination.dto';
 import { Repository } from 'typeorm';
 import {
   ArticleCreateInput,
@@ -10,6 +11,10 @@ import {
   ArticleUpdateInput,
   ArticleUpdateOutput,
 } from './dtos/article-update.dto';
+import {
+  ArticlesPagination,
+  ArticlesPaginationArgs,
+} from './dtos/articles-pagination.dto';
 import { Article } from './models/article.model';
 
 @Injectable()
@@ -46,7 +51,35 @@ export class ArticleService {
     return { id };
   }
 
-  async articleList(): Promise<Article[]> {
-    return this.articleRepository.find();
+  async articlesList(
+    args: ArticlesPaginationArgs,
+  ): Promise<ArticlesPagination> {
+    const qb = this.articleRepository
+      .createQueryBuilder('article')
+      .take(args.take)
+      .skip(args.skip);
+
+    if (args.sortBy) {
+      if (args.sortBy.createdAt) {
+        qb.addOrderBy(
+          'article.createdAt',
+          (args.sortBy.createdAt as SortDirection) === SortDirection.ASC
+            ? 'ASC'
+            : 'DESC',
+        );
+      }
+
+      if (args.sortBy.title) {
+        qb.addOrderBy(
+          'article.title',
+          (args.sortBy.title as SortDirection) === SortDirection.ASC
+            ? 'ASC'
+            : 'DESC',
+        );
+      }
+    }
+
+    const [nodes, totalCount] = await qb.getManyAndCount();
+    return { nodes, totalCount };
   }
 }
