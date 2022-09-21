@@ -19,4 +19,8 @@ export class UserService {
     await user.save();
     return { user };
   }
+
+  async userGetById(id: User['id']): Promise<User> {
+    return await this.userRepository.findOneByOrFail({ id });
+  }
 }

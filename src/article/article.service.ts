@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JWTPayload } from 'src/auth/auth.service';
 import { SortDirection } from 'src/pagination/dto/pagination.dto';
+import { User } from 'src/user/models/user.model';
 import { Repository } from 'typeorm';
 import {
   ArticleCreateInput,
@@ -24,8 +26,13 @@ export class ArticleService {
     private readonly articleRepository: Repository<Article>,
   ) {}
 
-  async createArticle(input: ArticleCreateInput): Promise<ArticleCreateOutput> {
+  async createArticle(
+    user: JWTPayload,
+    input: ArticleCreateInput,
+  ): Promise<ArticleCreateOutput> {
     const article = this.articleRepository.create(input);
+    article.author = new User();
+    article.author.id = user.id;
     await article.save();
     return { article };
   }

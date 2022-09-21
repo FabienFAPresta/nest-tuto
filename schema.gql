@@ -20,6 +20,21 @@ type Article {
   title: String!
   description: String!
   image: String!
+  author: User
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  firstName: String!
+  lastName: String!
+  avatar: String
+}
+
+type UserCreateOutput {
+  user: User!
 }
 
 type ArticleCreateOutput {
@@ -37,20 +52,6 @@ type ArticleUpdateOutput {
 type ArticlesPagination {
   totalCount: Float!
   nodes: [Article!]!
-}
-
-type User {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String!
-  firstName: String!
-  lastName: String!
-  avatar: String
-}
-
-type UserCreateOutput {
-  user: User!
 }
 
 type AuthLoginOutput {
@@ -76,8 +77,8 @@ type Mutation {
   createArticle(input: ArticleCreateInput!): ArticleCreateOutput!
   updateArticle(id: ID!, input: ArticleUpdateInput!): ArticleUpdateOutput!
   deleteArticle(id: ID!): ArticleDeleteOutput!
-  authLogin(username: String!, password: String!): AuthLoginOutput!
   userCreate(input: UserCreateInput!): UserCreateOutput!
+  authLogin(username: String!, password: String!): AuthLoginOutput!
 }
 
 input ArticleCreateInput {
