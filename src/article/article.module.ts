@@ -15,5 +15,6 @@ import { ArticleQueriesResolver } from './resolvers/article.queries.resolver';
     ArticleQueriesResolver,
     ArticleFieldResolver,
   ],
+  exports: [ArticleService],
 })
 export class ArticleModule {}

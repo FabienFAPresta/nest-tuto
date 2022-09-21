@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JWTPayload } from 'src/auth/auth.service';
 import { SortDirection } from 'src/pagination/dto/pagination.dto';
@@ -21,6 +21,7 @@ import { Article } from './models/article.model';
 
 @Injectable()
 export class ArticleService {
+  private readonly logger = new Logger('ArticleService');
   constructor(
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
@@ -57,6 +58,15 @@ export class ArticleService {
 
     return { id };
   }
+
+  // async getArticleByAuthorId(authorId: User['id']): Promise<Article[]> {
+  //   console.log(authorId);
+  //   const [articles] = await this.articleRepository.findAndCount({
+  //     relations: { authorId: true },
+  //   });
+  //   console.log(articles);
+  //   return articles;
+  // }
 
   async articlesList(
     args: ArticlesPaginationArgs,

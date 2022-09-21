@@ -37,6 +37,11 @@ type UserCreateOutput {
   user: User!
 }
 
+type UsersPagination {
+  totalCount: Float!
+  nodes: [User!]!
+}
+
 type ArticleCreateOutput {
   article: Article!
 }
@@ -61,6 +66,7 @@ type AuthLoginOutput {
 type Query {
   sayHello: String!
   articleList(skip: Int!, take: Int!, sortBy: ArticlePaginationSortBy): ArticlesPagination!
+  userList(skip: Int!, take: Int!, sortBy: PaginationSortBy): UsersPagination!
 }
 
 input ArticlePaginationSortBy {
@@ -71,6 +77,10 @@ input ArticlePaginationSortBy {
 enum SortDirection {
   ASC
   DESC
+}
+
+input PaginationSortBy {
+  createdAt: SortDirection
 }
 
 type Mutation {
