@@ -38,6 +38,10 @@ export class ArticleService {
     return { article };
   }
 
+  async getArticleById(articleId: string): Promise<Article> {
+    return this.articleRepository.findOneByOrFail({ id: articleId });
+  }
+
   async updateArticle(
     id: Article['id'],
     input: ArticleUpdateInput,

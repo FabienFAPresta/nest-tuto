@@ -13,6 +13,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Comment {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String!
+}
+
 type Article {
   id: ID!
   createdAt: DateTime!
@@ -63,6 +70,10 @@ type AuthLoginOutput {
   accessToken: String!
 }
 
+type CommentCreateOutput {
+  comment: Comment!
+}
+
 type Query {
   sayHello: String!
   articleList(skip: Int!, take: Int!, sortBy: ArticlePaginationSortBy): ArticlesPagination!
@@ -89,6 +100,7 @@ type Mutation {
   deleteArticle(id: ID!): ArticleDeleteOutput!
   userCreate(input: UserCreateInput!): UserCreateOutput!
   authLogin(username: String!, password: String!): AuthLoginOutput!
+  createComment(input: CommentCreateInput!): CommentCreateOutput!
 }
 
 input ArticleCreateInput {
@@ -109,4 +121,9 @@ input UserCreateInput {
   email: String!
   password: String!
   avatar: String
+}
+
+input CommentCreateInput {
+  articleId: String!
+  message: String!
 }
